@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+struct node{
+  	int key;
+  	struct node *left,*right;
+};
+
+struct node *newNode(int item) {
+  	struct node *temp=(struct node *)malloc(sizeof(struct node));
+  	temp->key=item;
+  	temp->left=temp->right=NULL;
+  	return temp;
+}
+
+void inorder(struct node *root){
+  	if(root!=NULL){
+    	inorder(root->left);
+		printf("%d->",root->key);
+		inorder(root->right);
+  	}
+}
+
+struct node *insert(struct node *node,int key) {
+	if(node==NULL) return newNode(key);
+	if(key<node->key){
+		printf("Soy el numero %d y me movi a la izquierda\n",key);
+		node->left=insert(node->left,key);
+	}
+  	else{
+  		printf("Soy el numero %d y me movi a la derecha\n",key);
+  		node->right=insert(node->right,key);
+	}
+  	return node;
+}
+
+int main() {
+  	srand(time(NULL));
+  	int n,i,numero;
+	struct node *root=NULL;
+	
+	printf("\nBINARY SEARCH TREE - BST\n");
+  	printf("Cuantos nodos va a poner: ");
+  	scanf("%d",&n);
+  	
+  	for(i=0;i<n;i++){
+		numero=rand()%(100-1+1)+1; 
+		if(i==0) printf("\nSoy el %d y soy la raiz\n",numero);
+		else printf("\n");
+		root=insert(root,numero);
+	}
+  
+  	return 0;
+}
